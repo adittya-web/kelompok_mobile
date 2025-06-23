@@ -84,6 +84,6 @@ class ServiceController extends Controller
 
         $service->delete();
 
-        return response()->json(['success' => true, 'message' => 'Layanan berhasil dihapus']);
+        return response()->json(['success' => true, 'message' => 'Taya Ganteng']);
     }
 }
