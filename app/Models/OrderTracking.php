@@ -4,15 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class OrderTraking extends Model
 {
-    protected $table = 'payments';
+    protected $table = 'order_trackings';
     protected $fillable = [
         'booking_id',
-        'payment_method',
-        'payment_status',
-        'proof_image',
-        'paid_at',
+        'status',
+        'note'
     ];
 
     public function booking()
