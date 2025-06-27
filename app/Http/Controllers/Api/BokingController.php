@@ -58,23 +58,21 @@ class BokingController extends Controller
     }
 
     // GET /api/bookings/{id} - Menampilkan detail booking
-    public function show($id, Request $request)
-    {
-        $booking = Booking::with('service')
-            ->where('id', $id)
-            ->where('user_id', $request->user()->id)
-            ->first();
+    public function show($id)
+{
+    $booking = Booking::with('service')->find($id);
 
-        if (!$booking) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Booking tidak ditemukan'
-            ], 404);
-        }
-
+    if (!$booking) {
         return response()->json([
-            'success' => true,
-            'data' => $booking
-        ]);
+            'success' => false,
+            'message' => 'Booking tidak ditemukan'
+        ], 404);
     }
+
+    return response()->json([
+        'success' => true,
+        'data' => $booking
+    ]);
+}
+
 }
