@@ -1,68 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Custom CSS -->
-    @stack('styles')
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('services*') ? 'active' : '' }}" href="{{ route('services.index') }}">Services</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+@extends('adminlte::page')
 
-    <main>
-        @if(session('success'))
-        <div class="container">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-        @endif
+{{-- Extend and customize the browser title --}}
 
-        @if(session('error'))
-        <div class="container">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-        @endif
+@section('title')
+    {{ config('adminlte.title') }}
+    @hasSection('subtitle') | @yield('subtitle') @endif
+@stop
 
-        @yield('content')
-    </main>
+{{-- Extend and customize the page content header --}}
 
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container text-center">
-            <span class="text-muted">© {{ date('Y') }} {{ config('app.name', 'Laravel') }}. All rights reserved.</span>
-        </div>
-    </footer>
+@section('content_header')
+    @hasSection('content_header_title')
+        <h1 class="text-muted">
+            @yield('content_header_title')
 
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom Scripts -->
-    @stack('scripts')
-</body>
-</html>
+            @hasSection('content_header_subtitle')
+                <small class="text-dark">
+                    <i class="fas fa-xs fa-angle-right text-muted"></i>
+                    @yield('content_header_subtitle')
+                </small>
+            @endif
+        </h1>
+    @endif
+@stop
+
+{{-- Rename section content to content_body --}}
+
+@section('content')
+    @yield('content_body')
+@stop
+
+{{-- Create a common footer --}}
+
+@section('footer')
+    <div class="float-right">
+        Version: {{ config('app.version', '1.0.0') }}
+    </div>
+
+    <strong>
+        <a href="{{ config('app.company_url', '#') }}">
+            {{ config('app.company_name', 'My company') }}
+        </a>
+    </strong>
+@stop
+
+{{-- Add common Javascript/Jquery code --}}
+
+@push('js')
+<script>
+
+    $(document).ready(function() {
+        // Add your common script logic here...
+    });
+
+</script>
+@endpush
+
+{{-- Add common CSS customizations --}}
+
+@push('css')
+<style type="text/css">
+
+    {{-- You can add AdminLTE customizations here --}}
+    /*
+    .card-header {
+        border-bottom: none;
+    }
+    .card-title {
+        font-weight: 600;
+    }
+    */
+
+</style>
+@endpush
