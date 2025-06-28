@@ -40,7 +40,7 @@
                             <button type="submit" class="btn btn-success">Konfirmasi</button>
                         </form>
                     @else
-                        Sudah Dikonfirmasi
+                        Bukti Sudah Dikonfirmasi
                     @endif
                 </td>
             </tr>
