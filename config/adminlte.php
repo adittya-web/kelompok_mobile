@@ -327,10 +327,18 @@ return [
             'label' => 4,
             'label_color' => 'success',
         ],
+        [
+            'text' => 'payments',
+            'url' => '/payments',
+            'icon' => 'fas fa-fw fa-credit-card',
+            'label' => 3,
+            'label_color' => 'warning',
+            'can' => 'manage-payments',
+        ],
         ['header' => 'account_settings'],
         [
-            'text' => 'profile',
-            'url' => 'admin/settings',
+            'text' => 'payments',
+            'url' => '/payments',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
