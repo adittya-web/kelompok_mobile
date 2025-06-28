@@ -28,7 +28,7 @@
                 <td>{{ $payment->payment_status }}</td>
                 <td>
                     @if($payment->proof_image)
-                        <img src="{{ asset('storage/payments/' . $payment->proof_image) }}" width="100">
+                    <img src="{{ asset('storage/bukti/' . $payment->proof_image) }}" width="100">
                     @else
                         Tidak Ada Bukti
                     @endif
@@ -40,7 +40,7 @@
                             <button type="submit" class="btn btn-success">Konfirmasi</button>
                         </form>
                     @else
-                        Bukti Sudah Dikonfirmasi
+                        Sudah Dikonfirmasi
                     @endif
                 </td>
             </tr>

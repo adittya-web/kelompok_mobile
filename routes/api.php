@@ -17,10 +17,7 @@ Route::apiResource('services', ServiceController::class);
 Route::post('/bookings', [BokingController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/bookings', [BokingController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/bookings/{id}', [BokingController::class, 'show'])->middleware('auth:sanctum');
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/payments', [PaymentController::class, 'store']);
-    Route::get('/payments', [PaymentController::class, 'index']); 
-});
+Route::get('/payments', [PaymentApiController::class, 'index'])->middleware('auth:sanctum');
 
 Route::apiResource('payments', PaymentController::class)->middleware('auth:sanctum');
 
