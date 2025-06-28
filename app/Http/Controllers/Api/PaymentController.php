@@ -81,9 +81,9 @@ class PaymentController extends Controller
                 'payment_method' => $payment->payment_method,
                 'payment_status' => $payment->payment_status,
                 'paid_at' => $payment->paid_at,
-                'proof_image_url' => $payment->proof_image 
-                    ? url('storage/payment/' . $payment->proof_image)
-                    : null
+'proof_image_url' => $payment->proof_image 
+    ? url('storage/' . $payment->proof_image)
+    : null
             ];
             return $data;
         });

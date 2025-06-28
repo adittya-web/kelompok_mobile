@@ -14,6 +14,7 @@ Route::apiResource('services', ServiceController::class);
 Route::post('/bookings', [BokingController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/bookings', [BokingController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/bookings/{id}', [BokingController::class, 'show'])->middleware('auth:sanctum');
+Route::get('/payments', [PaymentApiController::class, 'index'])->middleware('auth:sanctum');
 Route::apiResource('payments', PaymentController::class)->middleware('auth:sanctum');
 Route::apiResource('ordertrakings', OrderTrackingController::class);
 Route::apiResource('users', UserController::class);
