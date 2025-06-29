@@ -1,24 +1,34 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Kreait\Firebase\Auth as FirebaseAuth;
 use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function firebaseLogin(Request $request)
     {
         $request->validate([
-            'email' => 'required',
-            'password' => 'required',
+            'firebase_token' => 'required|string',
+            'email' => 'required|email',
+            'name' => 'required|string',
         ]);
-        $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Name Atau Password salah'], 401);
+        try {
+            $firebaseAuth = app('firebase.auth');
+            $verifiedIdToken = $firebaseAuth->verifyIdToken($request->firebase_token);
+            $firebaseUid = $verifiedIdToken->claims()->get('sub');
+        } catch (\Throwable $e) {
+            return response()->json(['message' => 'Invalid Firebase token'], 401);
         }
+
+        $user = User::firstOrCreate(
+            ['email' => $request->email],
+            ['name' => $request->name]
+        );
 
         $token = $user->createToken('mobile')->plainTextToken;
 

@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
@@ -40,7 +42,7 @@ class PaymentController extends Controller
             $file = $request->file('proof_image');
             if ($file->isValid()) {
                 $filename = time() . '_' . $file->getClientOriginalName();
-                $file->storeAs('public/payment', $filename);
+                $file->storeAs('/payment', $filename); // simpan ke storage/app/public/payment
                 $payment->proof_image = $filename;
                 $payment->payment_method = 'Transfer';
             } else {
@@ -61,14 +63,12 @@ class PaymentController extends Controller
                 'payment_method' => $payment->payment_method,
                 'payment_status' => $payment->payment_status,
                 'proof_image_url' => $payment->proof_image
-                    ? asset('storage/' . $payment->proof_image)
-                    : null,
+    ? asset('storage/payment/' . $payment->proof_image)
+    : null,
                 'paid_at' => $payment->paid_at,
             ]
         ], 201);
     }
-
-
 
     public function index(Request $request)
     {
@@ -87,6 +87,7 @@ class PaymentController extends Controller
                 'payment_status' => $payment->payment_status,
                 'paid_at' => $payment->paid_at,
 
+
                 'proof_image_url' => $payment->proof_image
                     ? asset('storage/payment/' . $payment->proof_image)
                     : null,
@@ -98,5 +99,4 @@ class PaymentController extends Controller
             'data' => $data
         ]);
     }
-
 }
