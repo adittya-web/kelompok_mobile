@@ -17,9 +17,9 @@ class PaymentAdminController extends Controller
     public function confirm($id)
     {
         $payment = Payment::findOrFail($id);
-        $payment->payment_status = 'Confirmed';
+        $payment->payment_status = 'Lunas'; // sesuai ENUM
         $payment->save();
-
+    
         return redirect()->back()->with('success', 'Pembayaran telah dikonfirmasi.');
     }
 }

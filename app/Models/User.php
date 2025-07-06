@@ -47,4 +47,21 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(\App\Models\Booking::class);
+    }
+    
+    public function payments()
+    {
+        return $this->hasManyThrough(
+            \App\Models\Payment::class,
+            \App\Models\Booking::class,
+            'user_id', // Foreign key on bookings table
+            'booking_id', // Foreign key on payments table
+            'id', // Local key on users table
+            'id'  // Local key on bookings table
+        );
+    }
 }

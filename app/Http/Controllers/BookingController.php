@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
@@ -8,73 +8,26 @@ use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class BokingController extends Controller
+class BookingController extends Controller
 {
     // GET /api/bookings - Menampilkan semua booking milik user
-    public function index(Request $request)
+    public function index()
     {
-        $bookings = Booking::with('service')
-                    ->where('user_id', $request->user()->id)
-                    ->latest()
-                    ->get();
-
-        return response()->json([
-            'success' => true,
-            'data' => $bookings
-        ]);
+        $bookings = \App\Models\Booking::with(['user', 'service'])->latest()->get();
+        return view('admin.bokings.index', compact('bookings'));
     }
+    
 
     // POST /api/bookings - Membuat booking baru
-    public function store(Request $request)
+    public function updateStatus(Request $request, $id) 
     {
-        $validator = Validator::make($request->all(), [
-            'service_id'   => 'required|exists:services,id',
-            'weight'       => 'required|numeric|min:1',
-            'pickup_date'  => 'required|date',
-            'address'      => 'required|string|max:255',
+        $request->validate([
+            'status' => 'required|string'
         ]);
-
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
-        }
-
-        $service = Service::find($request->service_id);
-        $total_price = $service->price_per_kg * $request->weight;
-
-        $booking = Booking::create([
-            'user_id'     => $request->user()->id,
-            'service_id'  => $request->service_id,
-            'weight'      => $request->weight,
-            'pickup_date' => $request->pickup_date,
-            'address'     => $request->address,
-            'total_price' => $total_price,
-            'status'      => 'Menunggu Konfirmasi',
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'data' => $booking
-        ], 201);
-    }
-
-    // GET /api/bookings/{id} - Menampilkan detail booking
-    public function show($id, Request $request)
-    {
-        $booking = Booking::with('service')
-            ->where('id', $id)
-            ->where('user_id', $request->user()->id)
-            ->first();
-
-        if (!$booking) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Booking tidak ditemukan'
-            ], 404);
-        }
-
-        return response()->json([
-            'success' => true,
-            'data' => $booking
-        ]);
+        
+        $booking = Booking::findOrFail($id);
+        $booking->status = $request->status;
+        $booking->save();
+        return redirect()->back()->with('success', 'Status berhasil diperbarui!');
     }
 }

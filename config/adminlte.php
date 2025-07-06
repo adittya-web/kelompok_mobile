@@ -299,107 +299,48 @@ return [
     */
 
     'menu' => [
-        // Navbar items:
+        
         [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
+            'text' => 'Dashboard',
+            'url'  => 'admin/dashboard',
+            'icon' => 'fas fa-tachometer-alt',
+            
         ],
         [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => true,
+            'text' => 'Booking',
+            'url'  => '/bookings',
+            'icon' => 'fas fa-calendar-check',
+            
         ],
-
+        [
+            'text' => 'Pembayaran',
+            'url'  => '/payments',
+            'icon' => 'fas fa-money-bill',
+            
+        ],
+        [
+            'text' => 'Layanan',
+            'url'  => '/services',
+            'icon' => 'fas fa-concierge-bell',
+            
+        ],
+        [
+            'text' => 'Users',
+            'url'  => '/users',
+            'icon' => 'fas fa-users',
+            
+        ],
+        [
+            'text' => 'Laporan',
+            'url'  => '/laporan',
+            'icon' => 'fas fa-file-alt',
+            
+        ],
         // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
-        [
-            'text' => 'services',
-            'url' => '/services',
-            'icon' => 'fas fa-fw fa-cogs',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        [
-            'text' => 'payments',
-            'url' => '/payments',
-            'icon' => 'fas fa-fw fa-credit-card',
-            'label' => 3,
-            'label_color' => 'warning',
-            'can' => 'manage-payments',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'payments',
-            'url' => '/payments',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
-        ],
+
+
+        
+        
     ],
 
     /*

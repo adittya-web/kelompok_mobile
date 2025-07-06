@@ -70,7 +70,7 @@ return [
         |--------------------------------------------------------------------------
         */
         JeroenNoten\LaravelAdminLte\AdminLteServiceProvider::class,
-        Kreait\Laravel\Firebase\ServiceProvider::class,
+       
 
         /*
         |--------------------------------------------------------------------------
