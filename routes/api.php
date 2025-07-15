@@ -21,17 +21,19 @@ Route::apiResource('services', ServiceController::class);
 Route::apiResource('ordertrakings', OrderTrackingController::class);
 Route::apiResource('users', UserController::class);
 
-// === Booking Routes with Sanctum Middleware ===
+// === Protected Routes with Sanctum Middleware ===
 Route::middleware('auth:sanctum')->group(function () {
+
+    // Booking
     Route::post('/bookings', [BokingController::class, 'store']);
     Route::get('/bookings', [BokingController::class, 'index']);
     Route::get('/bookings/{id}', [BokingController::class, 'show']);
 
-    // Payment protected routes
+    // Payments
     Route::apiResource('payments', PaymentController::class);
-    
+
     // Get authenticated user
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        return response()->json($request->user());
     });
 });

@@ -7,9 +7,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
+    // Ambil semua user
     public function index()
     {
         $users = User::all();
@@ -19,12 +21,14 @@ class UserController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    // Registrasi user baru + verifikasi reCAPTCHA v3
+      public function store(Request $request)
     {
+        // Validasi data input user
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8'
+            'password' => 'required|string|min:8|confirmed'
         ]);
 
         if ($validator->fails()) {
@@ -34,6 +38,7 @@ class UserController extends Controller
             ], 422);
         }
 
+        // Buat user baru
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -46,6 +51,7 @@ class UserController extends Controller
         ], 201);
     }
 
+    // Tampilkan detail user berdasarkan ID
     public function show($id)
     {
         $user = User::find($id);
@@ -53,7 +59,7 @@ class UserController extends Controller
         if (!$user) {
             return response()->json([
                 'success' => false,
-                'message' => 'User not found'
+                'message' => 'User tidak ditemukan'
             ], 404);
         }
 
@@ -63,6 +69,7 @@ class UserController extends Controller
         ]);
     }
 
+    // Update data user
     public function update(Request $request, $id)
     {
         $user = User::find($id);
@@ -70,14 +77,14 @@ class UserController extends Controller
         if (!$user) {
             return response()->json([
                 'success' => false,
-                'message' => 'User not found'
+                'message' => 'User tidak ditemukan'
             ], 404);
         }
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-            'password' => 'sometimes|string|min:8'
+            'password' => 'nullable|string|min:8'
         ]);
 
         if ($validator->fails()) {
@@ -92,7 +99,7 @@ class UserController extends Controller
             'email' => $request->email
         ];
 
-        if ($request->has('password')) {
+        if ($request->filled('password')) {
             $userData['password'] = Hash::make($request->password);
         }
 
@@ -104,6 +111,7 @@ class UserController extends Controller
         ]);
     }
 
+    // Hapus user
     public function destroy($id)
     {
         $user = User::find($id);
@@ -111,7 +119,7 @@ class UserController extends Controller
         if (!$user) {
             return response()->json([
                 'success' => false,
-                'message' => 'User not found'
+                'message' => 'User tidak ditemukan'
             ], 404);
         }
 
@@ -119,7 +127,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'User deleted successfully'
+            'message' => 'User berhasil dihapus'
         ]);
     }
 }
