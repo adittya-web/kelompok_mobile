@@ -4,40 +4,49 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Kreait\Firebase\Auth as FirebaseAuth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Kreait\Firebase\Auth;
 
 class AuthController extends Controller
 {
-    public function firebaseLogin(Request $request)
+    // Login menggunakan email & password dari database MySQL
+    public function login(Request $request)
     {
-        $request->validate([
-            'firebase_token' => 'required|string',
-            'email' => 'required|email',
-            'name' => 'required|string',
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'email'    => 'required|email',
+            'password' => 'required|string',
         ]);
 
-        try {
-            $firebaseAuth = app('firebase.auth');
-            $verifiedIdToken = $firebaseAuth->verifyIdToken($request->firebase_token);
-            $firebaseUid = $verifiedIdToken->claims()->get('sub');
-        } catch (\Throwable $e) {
-            return response()->json(['message' => 'Invalid Firebase token'], 401);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validasi gagal',
+                'errors'  => $validator->errors()
+            ], 422);
         }
 
-        $user = User::firstOrCreate(
-            ['email' => $request->email],
-            ['name' => $request->name]
-        );
+        // Ambil user berdasarkan email
+        $user = User::where('email', $request->email)->first();
 
-        $token = $user->createToken('mobile')->plainTextToken;
+        // Cek apakah user ada dan password cocok
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'Email atau password salah',
+            ], 401);
+        }
 
+        // Buat token Sanctum
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        // Kirim respon
         return response()->json([
-            'user' => $user,
-            'token' => $token,
-        ]);
+            'message' => 'Login berhasil',
+            'user'    => $user,
+            'token'   => $token,
+        ], 200);
     }
 
     public function register(Request $request)
