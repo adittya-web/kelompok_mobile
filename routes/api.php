@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\GoogleAuthController;
 Route::post('/auth/firebase', [AuthController::class, 'firebaseLogin']);
 Route::post('/auth/google', [GoogleAuthController::class, 'loginWithGoogle']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
 // === Public APIs ===
 Route::apiResource('services', ServiceController::class);
@@ -24,8 +25,6 @@ Route::apiResource('services', ServiceController::class);
 Route::post('/bookings', [BokingController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/bookings', [BokingController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/bookings/{id}', [BokingController::class, 'show'])->middleware('auth:sanctum');
-Route::get('/payments', [PaymentApiController::class, 'index'])->middleware('auth:sanctum');
-
 Route::apiResource('payments', PaymentController::class)->middleware('auth:sanctum');
 
 
@@ -37,6 +36,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/bookings', [BokingController::class, 'store']);
     Route::get('/bookings', [BokingController::class, 'index']);
     Route::get('/bookings/{id}', [BokingController::class, 'show']);
+    Route::put('/bookings/{id}', [BokingController::class, 'update']);
+
 
     // Payment protected routes
     Route::apiResource('payments', PaymentController::class);
@@ -45,4 +46,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+});
+
+
+
+Route::middleware('auth:sanctum')->get('/history', function (Request $request) {
+    $user = $request->user();
+
+    // Ambil semua bookings milik user, beserta relasi 'service'
+    $bookings = $user->bookings()->with('service')->latest()->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $bookings,
+    ]);
 });

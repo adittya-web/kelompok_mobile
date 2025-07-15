@@ -2,20 +2,20 @@
 
 @section('content')
 <div class="container-fluid mt-4">
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <h4><i class="fas fa-concierge-bell"></i> Daftar Layanan</h4>
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-calendar-check"></i> Data Booking</h4>
         </div>
         <div class="col-md-6 text-end">
             <a href="{{ route('services.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus-circle"></i> Tambah Layanan
             </a>
         </div>
-    </div>
+    
 
     <div class="card shadow-sm">
         <div class="card-body table-responsive">
-            <table class="table table-striped table-hover align-middle">
+            <table id="krs-table" class="table table-bordered table-striped">
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
@@ -58,3 +58,15 @@
     </div>
 </div>
 @endsection
+@section('css')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+@stop
+
+@section('js')
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#krs-table').DataTable();
+        });
+    </script>
+@stop

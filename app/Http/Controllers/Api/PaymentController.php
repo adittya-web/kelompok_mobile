@@ -13,62 +13,32 @@ class PaymentController extends Controller
 {
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'booking_id' => 'required|exists:bookings,id',
-            'proof_image' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
+            'payment_method' => 'required|in:Transfer,COD',
+            'proof_image' => 'required_if:payment_method,Transfer|image|max:2048',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        $booking = Booking::find($request->booking_id);
-        if (!$booking || $booking->user_id !== $request->user()->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Booking tidak ditemukan atau bukan milik Anda'
-            ], 403);
-        }
-
-        $payment = new Payment();
-        $payment->booking_id = $booking->id;
-        $payment->paid_at = now();
-        $payment->payment_status = 'Pending';
-
+        $path = null;
         if ($request->hasFile('proof_image')) {
-            $file = $request->file('proof_image');
-            if ($file->isValid()) {
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $file->storeAs('/payment', $filename); // simpan ke storage/app/public/payment
-                $payment->proof_image = $filename;
-                $payment->payment_method = 'Transfer';
-            } else {
-                return response()->json(['message' => 'File tidak valid'], 422);
-            }
-        } else {
-            $payment->payment_method = 'COD';
+            $path = $request->file('proof_image')->store('payments', 'public');
         }
 
-        $payment->save();
+        $payment = Payment::create([
+            'booking_id' => $request->booking_id,
+            'payment_method' => $request->payment_method,
+            'payment_status' => 'pending',
+            'proof_image_url' => $path ? asset('storage/' . $path) : null,
+
+        ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Pembayaran berhasil dikirim',
-            'data' => [
-                'id' => $payment->id,
-                'booking_id' => $payment->booking_id,
-                'payment_method' => $payment->payment_method,
-                'payment_status' => $payment->payment_status,
-                'proof_image_url' => $payment->proof_image
-    ? asset('storage/payment/' . $payment->proof_image)
-    : null,
-                'paid_at' => $payment->paid_at,
-            ]
-        ], 201);
+            'data' => $payment,
+        ]);
     }
+
 
     public function index(Request $request)
     {
@@ -96,7 +66,23 @@ class PaymentController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $data
+            'data' => $payments // kirim langsung objek payment lengkap
+        ]);
+    }
+
+    public function confirm($id)
+    {
+        $payment = Payment::findOrFail($id);
+        $payment->payment_status = 'lunas'; // ✅ HARUS INI, bukan $payment->status
+        $payment->save();
+
+        $booking = $payment->booking;
+        $booking->payment_status = 'lunas';
+        $booking->save();
+
+        return response()->json([
+            'message' => 'Pembayaran dikonfirmasi',
+            'payment' => $payment,
         ]);
     }
 }
