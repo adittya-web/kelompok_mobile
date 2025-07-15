@@ -14,9 +14,9 @@ class BokingController extends Controller
     public function index(Request $request)
     {
         $bookings = Booking::with('service')
-                    ->where('user_id', $request->user()->id)
-                    ->latest()
-                    ->get();
+            ->where('user_id', $request->user()->id)
+            ->latest()
+            ->get();
 
         return response()->json([
             'success' => true,
@@ -39,7 +39,7 @@ class BokingController extends Controller
         }
 
         $service = Service::find($request->service_id);
-        $total_price = $service->price_per_kg * $request->weight;
+        $total_price = $service->harga * $request->weight;
 
         $booking = Booking::create([
             'user_id'     => $request->user()->id,
@@ -59,20 +59,33 @@ class BokingController extends Controller
 
     // GET /api/bookings/{id} - Menampilkan detail booking
     public function show($id)
-{
-    $booking = Booking::with('service')->find($id);
+    {
+        $booking = Booking::with('service')->find($id);
 
-    if (!$booking) {
+        if (!$booking) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Booking tidak ditemukan'
+            ], 404);
+        }
+
         return response()->json([
-            'success' => false,
-            'message' => 'Booking tidak ditemukan'
-        ], 404);
+            'success' => true,
+            'data' => $booking
+        ]);
     }
 
-    return response()->json([
-        'success' => true,
-        'data' => $booking
-    ]);
-}
+    public function update(Request $request, $id)
+    {
+        $booking = Booking::find($id);
 
+        if (!$booking) {
+            return response()->json(['message' => 'Data tidak ditemukan'], 404);
+        }
+
+        $booking->status = $request->status;
+        $booking->save();
+
+        return response()->json(['message' => 'Status berhasil diperbarui']);
+    }
 }

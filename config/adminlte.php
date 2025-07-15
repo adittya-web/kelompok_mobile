@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Laundry Berkah',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,12 +63,11 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
-    'logo_img_xl' => null,
-    'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+'logo' => '<b>Laundry</b>Berkah',
+'logo_img' => 'images/Laundry-Logo.jpg', // tambahkan baris ini
+'logo_img_class' => 'brand-image img-circle elevation-3',
+'logo_img_xl' => null,
+'logo_img_alt' => 'Laundry Logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -83,16 +82,16 @@ return [
     |
     */
 
-    'auth_logo' => [
-        'enabled' => false,
-        'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'Auth Logo',
-            'class' => '',
-            'width' => 50,
-            'height' => 50,
-        ],
+'auth_logo' => [
+    'enabled' => true,
+    'img' => [
+        'path' => 'images/Laundry-Logo.jpg',
+        'alt' => 'Laundry Logo',
+        'class' => '',
+        'width' => 80,
+        'height' => 80,
     ],
+],
 
     /*
     |--------------------------------------------------------------------------
@@ -113,8 +112,8 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+            'path' => 'images/Laundry-Logo.jpg',
+            'alt' => 'Laundry Logo',
             'effect' => 'animation__shake',
             'width' => 60,
             'height' => 60,

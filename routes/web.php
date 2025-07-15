@@ -5,12 +5,10 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\user\BookingUserController as UserBookingController;
 use App\Http\Controllers\user\PaymentUserController as UserPaymentController;
 
 // Halaman awal bisa diarahkan ke login
@@ -19,6 +17,8 @@ Route::get('/', function () {
 });
 
 // Login & Logout
+
+Route::get('/', [LoginController::class, 'welcome'])->name('welcome');
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -32,7 +32,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/bookings/{id}/update-status', [BookingController::class, 'updateStatus'])->name('bookings.updateStatus');
 
     Route::resource('/services', ServiceController::class);
-    Route::resource('/payments', PaymentAdminController::class);
 
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::post('/payments/{id}/confirm', [PaymentController::class, 'confirm'])->name('payments.confirm');
@@ -46,8 +45,6 @@ Route::middleware(['auth'])->group(function () {
 
 // User routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
-    Route::resource('/my-bookings', UserBookingController::class)->only(['index', 'show','create','store']);
     Route::get('/upload-bukti/{booking}', [UserPaymentController::class, 'create'])->name('user.payments.upload');
     Route::post('/upload-bukti', [UserPaymentController::class, 'store'])->name('user.payments.store');
 
