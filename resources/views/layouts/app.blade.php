@@ -38,10 +38,9 @@
     </div>
 
     <strong>
-        <a href="{{ config('app.company_url', '#') }}">
-            {{ config('app.company_name', 'My company') }}
-        </a>
-    </strong>
+        Copyright &copy; 2025–{{ date('Y') }}
+        <a href="#">LaundryBerkah</a>.
+    </strong> All rights reserved.
 @stop
 
 {{-- Add common Javascript/Jquery code --}}
