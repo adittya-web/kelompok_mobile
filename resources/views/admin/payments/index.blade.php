@@ -2,6 +2,26 @@
 
 @section('content')
 <div class="container-fluid mt-4">
+    <div class="mb-4">
+        <form method="GET" class="row g-2 align-items-center">
+            <div class="col-auto">
+                <label for="statusFilter" class="col-form-label fw-bold text-white">
+                    <i class="fas fa-filter"></i> Filter Status:
+                </label>
+            </div>
+            <div class="col-auto">
+                <select name="status" id="statusFilter" class="form-select form-select-sm shadow-sm" onchange="this.form.submit()">
+                    <option value="">Semua</option>
+                    <option value="Pending" {{ request('status') == 'Pending' ? 'selected' : '' }}>Pending</option>
+                    <option value="Lunas" {{ request('status') == 'Lunas' ? 'selected' : '' }}>Lunas</option>
+                    <option value="Gagal" {{ request('status') == 'Gagal' ? 'selected' : '' }}>Gagal</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    
+
+    
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -10,16 +30,8 @@
     @endif
 
     <div class="card shadow-sm">
-        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-            <h5 class="mb-0"><i class="fas fa-money-bill-wave"></i> Data Pembayaran</h5>
-            <form method="GET" class="d-flex align-items-center">
-                <label class="me-2 text-white">Filter Status:</label>
-                <select name="status" onchange="this.form.submit()" class="form-select form-select-sm">
-                    <option value="">Semua</option>
-                    <option value="Pending" {{ request('status') == 'Pending' ? 'selected' : '' }}>Pending</option>
-                    <option value="Lunas" {{ request('status') == 'Lunas' ? 'selected' : '' }}>Lunas</option>
-                </select>
-            </form>
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-calendar-check"></i> Data Pembayaran</h4>
         </div>
 
         <div class="card-body table-responsive">
@@ -38,7 +50,7 @@
                     @forelse($payments as $payment)
                         <tr>
                             <td>{{ $payment->id }}</td>
-                            <td>{{ $payment->booking->user->name ?? '-' }}</td>
+                            <td>{{ optional(optional($payment->booking)->user)->name ?? '-' }}</td>
                             <td>{{ $payment->payment_method }}</td>
                             <td>
                                 <span class="badge bg-{{ $payment->payment_status === 'Lunas' ? 'success' : 'warning' }}">
@@ -95,6 +107,7 @@
 @section('js')
     <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
+        $.fn.dataTable.ext.errMode = 'throw';
         $(document).ready(function() {
             $('#krs-table').DataTable();
         });

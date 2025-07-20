@@ -2,20 +2,22 @@
 
 @section('content')
 <div class="container-fluid mt-4">
+
+    {{-- ✅ Header Halaman + Tombol Tambah --}}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="{{ route('services.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus-circle"></i> Tambah Layanan
+        </a>
+    </div>
+
+    {{-- ✅ Tabel Data --}}
     <div class="card">
         <div class="card-header bg-primary text-white">
-            <h4 class="mb-0"><i class="fas fa-calendar-check"></i> Data Booking</h4>
+            <h4 class="mb-0"><i class="fas fa-calendar-check"></i> Data Layanan</h4>
         </div>
-        <div class="col-md-6 text-end">
-            <a href="{{ route('services.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus-circle"></i> Tambah Layanan
-            </a>
-        </div>
-    
-
-    <div class="card shadow-sm">
+     <div class="card shadow-sm">
         <div class="card-body table-responsive">
-            <table id="krs-table" class="table table-bordered table-striped">
+            <table id="krs-table" class="table table-bordered table-striped" width="100%">
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
@@ -56,8 +58,10 @@
             </table>
         </div>
     </div>
+    </div>
 </div>
 @endsection
+
 @section('css')
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 @stop
@@ -66,7 +70,9 @@
     <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#krs-table').DataTable();
+            $('#krs-table').DataTable({
+                autoWidth: false
+            });
         });
     </script>
 @stop
