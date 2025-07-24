@@ -11,13 +11,13 @@ use Kreait\Firebase\Auth;
 
 class AuthController extends Controller
 {
-    // Login menggunakan email & password dari database MySQL
+    // Login
     public function login(Request $request)
     {
-        // Validasi input
         $validator = Validator::make($request->all(), [
-            'email'    => 'required|email',
-            'password' => 'required|string',
+            'email'      => 'required|email',
+            'password'   => 'required|string',
+            'fcm_token'  => 'nullable|string', // ✅ tambahkan validasi fcm_token
         ]);
 
         if ($validator->fails()) {
@@ -27,44 +27,49 @@ class AuthController extends Controller
             ], 422);
         }
 
-        // Ambil user berdasarkan email
         $user = User::where('email', $request->email)->first();
 
-        // Cek apakah user ada dan password cocok
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'message' => 'Email atau password salah',
             ], 401);
         }
 
-        // Buat token Sanctum
+        // ✅ Simpan FCM token jika ada
+        if ($request->filled('fcm_token')) {
+            $user->fcm_token = $request->fcm_token;
+            $user->save();
+        }
+
         $token = $user->createToken('token-name')->plainTextToken;
 
-        // Kirim respon
         return response()->json([
             'message' => 'Login berhasil',
             'token'   => $token,
             'user'    => [
-                'id'    => $user->id,
-                'name'  => $user->name,
-                'email' => $user->email,
+                'id'         => $user->id,
+                'name'       => $user->name,
+                'email'      => $user->email,
+                'fcm_token'  => $user->fcm_token, // opsional: kembalikan ke client
             ]
         ], 200);
     }
 
-    // Register user baru
+    // Register
     public function register(Request $request)
     {
         $request->validate([
-            'name'     => 'required|string',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|string|min:6',
+            'name'       => 'required|string',
+            'email'      => 'required|email|unique:users',
+            'password'   => 'required|string|min:6',
+            'fcm_token'  => 'nullable|string', // ✅ opsional, bisa juga saat register
         ]);
 
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
+            'name'       => $request->name,
+            'email'      => $request->email,
+            'password'   => Hash::make($request->password),
+            'fcm_token'  => $request->fcm_token, // ✅ simpan fcm_token jika ada
         ]);
 
         $token = $user->createToken('api-token')->plainTextToken;
