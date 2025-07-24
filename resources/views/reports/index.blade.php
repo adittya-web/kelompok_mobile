@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <h2>Laporan Booking Bulanan</h2>
+    <h2>Laporan Booking Bulanann</h2>
 
     <form method="GET" action="{{ route('report.index') }}" class="form-inline mb-3">
         <label for="month">Pilih Bulan: &nbsp;</label>

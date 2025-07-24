@@ -9,6 +9,9 @@ return [
      * ------------------------------------------------------------------------
      */
 
+    'credentials' => storage_path(env('FIREBASE_CREDENTIALS', 'app/firebase/tugasprojek-42c48-d35dbfc77806.json')),
+    'project_id' => env('FIREBASE_PROJECT_ID', 'your-project-id'),
+
     'default' => env('FIREBASE_PROJECT', 'app'),
 
     /*
