@@ -81,7 +81,7 @@
       </div>
       <!-- Right Image -->
       <div class="col-md-6 text-center mt-4 mt-md-0">
-        <img src="/assets/img/laundry-hero.png" alt="Laundry Image" class="hero-image">
+        <img src="{{ asset('images/spals.png') }}" alt="Laundry Berkah" class="hero-image" loading="lazy">
       </div>
     </div>
   </div>

@@ -91,7 +91,7 @@
       </div>
       <!-- Right Image -->
       <div class="col-md-6 text-center mt-4 mt-md-0">
-        <img src="{{ asset('images/spals.png') }}" alt="Laundry Berkah" class="hero-image" loading="lazy">
+        <img src="{{ asset('images/tampil.png') }}" alt="Laundry Berkah" class="hero-image" loading="lazy">
       </div>
     </div>
   </div>
