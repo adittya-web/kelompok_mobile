@@ -10,6 +10,8 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\user\PaymentUserController as UserPaymentController;
+use App\Http\Controllers\HomeController;
+
 
 // Halaman awal bisa diarahkan ke login
 Route::get('/', function () {
@@ -47,6 +49,4 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/upload-bukti/{booking}', [UserPaymentController::class, 'create'])->name('user.payments.upload');
     Route::post('/upload-bukti', [UserPaymentController::class, 'store'])->name('user.payments.store');
-
 });
-

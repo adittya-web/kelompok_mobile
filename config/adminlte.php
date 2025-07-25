@@ -299,42 +299,65 @@ return [
 
     'menu' => [
 
+        // Menu Utama
         [
             'text' => 'Dashboard',
             'url'  => 'admin/dashboard',
             'icon' => 'fas fa-fw fa-home',
-
         ],
+
+        // Dropdown Data Master
         [
-            'text' => 'Booking',
-            'url'  => '/bookings',
-            'icon' => 'fas fa-fw fa-calendar-check',
-
+            'text'    => 'Data Master',
+            'icon'    => 'fas fa-database',
+            'submenu' => [
+                [
+                    'text' => 'Layanan',
+                    'url'  => '/services',
+                    'icon' => 'fas fa-concierge-bell',
+                ],
+                [
+                    'text' => 'Users',
+                    'url'  => '/users',
+                    'icon' => 'fas fa-users',
+                ],
+            ],
         ],
+
+        // Dropdown Transaksi
         [
-            'text' => 'Pembayaran',
-            'url'  => '/payments',
-            'icon' => 'fas fa-fw fa-money-bill',
-
+            'text'    => 'Transaksi',
+            'icon'    => 'fas fa-exchange-alt',
+            'submenu' => [
+                [
+                    'text' => 'Booking',
+                    'url'  => '/bookings',
+                    'icon' => 'fas fa-calendar-check',
+                ],
+                [
+                    'text' => 'Pembayaran',
+                    'url'  => '/payments',
+                    'icon' => 'fas fa-money-bill',
+                ],
+            ],
         ],
+
+        // Dropdown Laporan
         [
-            'text' => 'Layanan',
-            'url'  => '/services',
-            'icon' => 'fas fa-concierge-bell',
-
+            'text'    => 'Laporan',
+            'icon'    => 'fas fa-file-alt',
+            'submenu' => [
+                [
+                    'text' => 'Laporan Transaksi',
+                    'url'  => '/laporan',
+                    'icon' => 'fas fa-file-invoice',
+                ],
+            ],
         ],
-        [
-            'text' => 'Users',
-            'url'  => '/users',
-            'icon' => 'fas fa-users',
 
-        ],
-        [
-            'text' => 'Laporan',
-            'url'  => '/laporan',
-            'icon' => 'fas fa-fw fa-file-alt',
 
-        ],
+
+
         // Sidebar items:
 
 

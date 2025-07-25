@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Service;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,7 +32,7 @@ class BokingController extends Controller
             'service_id'   => 'required|exists:services,id',
             'weight'       => 'required|numeric|min:1',
             'pickup_date'  => 'required|date',
-            'address'      => 'required|string|max:255',
+            'address'      => 'required|string|max:255' // ✅ tambahkan validasi ini
         ]);
 
         if ($validator->fails()) {
@@ -53,6 +54,7 @@ class BokingController extends Controller
 
         return response()->json([
             'success' => true,
+            'message' => 'Booking berhasil',
             'data' => $booking
         ], 201);
     }
