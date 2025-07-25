@@ -1,128 +1,108 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laundry Berkah</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(to right, #e6f0ff, #d4f5e6);
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Laundry Berkah</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 60px;
-        }
+  <!-- Favicon -->
+  <link rel="icon" href="{{ asset('images/icon.png') }}" type="image/png">
 
-        nav .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: #3366cc;
-        }
-
-        nav .menu a {
-            margin: 0 12px;
-            color: #333;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        nav .menu a:hover {
-            color: #0056b3;
-        }
-
-        .main-section {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 60px;
-            flex-wrap: wrap;
-        }
-
-        .main-text {
-            max-width: 500px;
-        }
-
-        .main-text h1 {
-            font-size: 52px;
-            font-weight: 700;
-            color: #1a1a1a;
-        }
-
-        .main-text p {
-            margin: 20px 0;
-            color: #444;
-            font-size: 18px;
-            line-height: 1.6;
-        }
-
-        .main-text a.btn {
-            padding: 12px 30px;
-            background-color: #3366cc;
-            color: white;
-            border-radius: 50px;
-            font-weight: bold;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .main-text a.btn:hover {
-            background-color: #254b9b;
-        }
-
-        .main-image img {
-            max-width: 400px;
-            width: 100%;
-            height: auto;
-        }
-
-        @media (max-width: 768px) {
-            .main-section {
-                flex-direction: column;
-                text-align: center;
-                padding: 30px;
-            }
-
-            nav {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .main-image img {
-                margin-top: 30px;
-            }
-        }
-    </style>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+    }
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .navbar-brand span {
+      color: #00b39f;
+    }
+    .hero-section {
+      background: linear-gradient(to right, #00b39f, #00e5b0);
+      color: white;
+      padding: 80px 0;
+    }
+    .hero-text h1 {
+      font-size: 48px;
+      font-weight: 800;
+    }
+    .hero-text p {
+      font-size: 18px;
+      margin-top: 15px;
+    }
+    .btn-rounded {
+      border-radius: 50px;
+      padding: 10px 25px;
+      font-weight: 600;
+    }
+    .btn-outline-white {
+      border: 2px solid #fff;
+      color: #fff;
+      background: transparent;
+    }
+    .btn-outline-white:hover {
+      background-color: #fff;
+      color: #00b39f;
+    }
+    .hero-image {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    footer {
+      background: #fff;
+      border-top: 1px solid #eee;
+    }
+    @media (max-width: 768px) {
+      .hero-text h1 {
+        font-size: 36px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">Laundry</div>
-        <div class="menu">
-            <a href="#">Sign In</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <a href="#">FAQ</a>
-        </div>
-    </nav>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg px-4 py-3 container-fluid">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Laundry<span>Berkah</span></a>
+    <div class="ms-auto">
+      <a href="{{ route('login') }}" class="btn btn-outline-success">Login</a>
+    </div>
+  </div>
+</nav>
 
-    <section class="main-section">
-        <div class="main-text">
-            <h1>Laundry</h1>
-            <p>Solusi terbaik untuk kebutuhan cucian Anda. Layanan laundry cepat, bersih, dan terpercaya dengan harga terjangkau.</p>
-            <a href="{{ route('login') }}" class="btn">Login</a>
+<!-- Hero Section -->
+<div class="container-fluid hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Left Text -->
+      <div class="col-md-6 hero-text text-center text-md-start">
+        <h1>Pakaian Bersih, Hidup Lebih Cerah</h1>
+        <p>Nikmati layanan laundry cepat, bersih, dan wangi. Kami siap menjemput dan mengantar pakaian Anda!</p>
+        <div class="mt-4">
+          <a href="{{ route('login') }}" class="btn btn-light btn-rounded me-3">🧺 Login untuk Booking</a>
+          <a href="#" class="btn btn-outline-white btn-rounded">Lihat Jadwal</a>
         </div>
-        <div class="main-image">
-            <img src="{{ asset('/images/spals.png') }}" alt="Ilustrasi Laundry">
-        </div>
-    </section>
+      </div>
+      <!-- Right Image -->
+      <div class="col-md-6 text-center mt-4 mt-md-0">
+        <img src="{{ asset('images/spals.png') }}" alt="Laundry Berkah" class="hero-image" loading="lazy">
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Footer -->
+<footer class="text-center text-muted py-4">
+  <small>&copy; {{ date('Y') }} Laundry Berkah. All rights reserved.</small>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
