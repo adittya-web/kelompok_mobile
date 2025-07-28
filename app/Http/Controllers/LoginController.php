@@ -30,6 +30,7 @@ class LoginController extends Controller
         // Cek user dan password
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
             return back()->withErrors(['name' => 'Nama pengguna atau kata sandi salah.']);
+
         }
 
         // Login user

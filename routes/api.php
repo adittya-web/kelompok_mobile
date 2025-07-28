@@ -19,47 +19,38 @@ Route::post('/register', [AuthController::class, 'register']);
 
 // === Public APIs ===
 Route::apiResource('services', ServiceController::class);
-
-
-
-Route::post('/bookings', [BokingController::class, 'store'])->middleware('auth:sanctum');
-Route::get('/bookings', [BokingController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/bookings/{id}', [BokingController::class, 'show'])->middleware('auth:sanctum');
-Route::apiResource('payments', PaymentController::class)->middleware('auth:sanctum');
-
-
 Route::apiResource('ordertrakings', OrderTrackingController::class);
 Route::apiResource('users', UserController::class);
 
-// === Protected Routes with Sanctum Middleware ===
+// === Protected Routes ===
 Route::middleware('auth:sanctum')->group(function () {
-
     // Booking
     Route::post('/bookings', [BokingController::class, 'store']);
     Route::get('/bookings', [BokingController::class, 'index']);
     Route::get('/bookings/{id}', [BokingController::class, 'show']);
     Route::put('/bookings/{id}', [BokingController::class, 'update']);
 
+    // FCM Test
+    Route::post('/send-test-notification', [BokingController::class, 'sendTestNotification']);
 
     // Payments
     Route::apiResource('payments', PaymentController::class);
+
+    // Update FCM Token
+    Route::post('/update-fcm-token', [UserController::class, 'updateFcmToken']);
 
     // Get authenticated user
     Route::get('/user', function (Request $request) {
         return response()->json($request->user());
     });
-});
 
+    // History
+    Route::get('/history', function (Request $request) {
+        $bookings = $request->user()->bookings()->with('service')->latest()->get();
 
-
-Route::middleware('auth:sanctum')->get('/history', function (Request $request) {
-    $user = $request->user();
-
-    // Ambil semua bookings milik user, beserta relasi 'service'
-    $bookings = $user->bookings()->with('service')->latest()->get();
-
-    return response()->json([
-        'success' => true,
-        'data' => $bookings,
-    ]);
+        return response()->json([
+            'success' => true,
+            'data' => $bookings,
+        ]);
+    });
 });

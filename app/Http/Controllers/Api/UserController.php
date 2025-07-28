@@ -7,7 +7,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Services\FirebaseNotificationService;
 use Illuminate\Support\Facades\Http;
+
 
 class UserController extends Controller
 {
@@ -130,4 +132,47 @@ class UserController extends Controller
             'message' => 'User berhasil dihapus'
         ]);
     }
+
+      public function updateFcmToken(Request $request)
+    {
+        $request->validate([
+            'fcm_token' => 'required|string'
+        ]);
+
+        $user = $request->user();
+        $user->fcm_token = $request->fcm_token;
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'FCM token berhasil diperbarui'
+        ]);
+    }
+
+    /**
+     * Test kirim notifikasi (untuk testing)
+     */
+   public function sendSampleNotification(Request $request)
+{
+    $user = $request->user();
+
+    if (!$user->fcm_token) {
+        return response()->json(['success' => false, 'message' => 'Token tidak ditemukan'], 400);
+    }
+
+    $firebase = new \App\Services\FirebaseNotificationService();
+
+    $success = $firebase->sendToDevice(
+        $user->fcm_token,
+        'Halo 👋',
+        'Ini notifikasi dari Firebase Admin SDK',
+        ['type' => 'test']
+    );
+
+    return response()->json([
+        'success' => $success,
+        'message' => $success ? 'Berhasil kirim notifikasi' : 'Gagal kirim notifikasi',
+    ]);
 }
+}
+
