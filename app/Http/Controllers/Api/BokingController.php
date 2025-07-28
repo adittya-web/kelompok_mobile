@@ -52,6 +52,8 @@ class BokingController extends Controller
             'status'      => 'Menunggu Konfirmasi',
         ]);
 
+        $booking->load('service'); // ⬅️ ini penting
+
         return response()->json([
             'success' => true,
             'message' => 'Booking berhasil',

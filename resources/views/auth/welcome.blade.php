@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Laundry Berkah</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <!-- Favicon -->
   <link rel="icon" href="{{ asset('images/icon.png') }}" type="image/png">
@@ -20,10 +21,10 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     .navbar-brand span {
-      color: #00b39f;
+      color: #2a9df4;
     }
     .hero-section {
-      background: linear-gradient(to right, #00b39f, #00e5b0);
+      background: linear-gradient(to right, #2a9df4, #2a9df4);
       color: white;
       padding: 80px 0;
     }
@@ -47,7 +48,7 @@
     }
     .btn-outline-white:hover {
       background-color: #fff;
-      color: #00b39f;
+      color: #2a9df4;
     }
     .hero-image {
       max-width: 100%;
@@ -86,12 +87,11 @@
         <p>Nikmati layanan laundry cepat, bersih, dan wangi. Kami siap menjemput dan mengantar pakaian Anda!</p>
         <div class="mt-4">
           <a href="{{ route('login') }}" class="btn btn-light btn-rounded me-3">🧺 Login untuk Booking</a>
-          <a href="#" class="btn btn-outline-white btn-rounded">Lihat Jadwal</a>
         </div>
       </div>
       <!-- Right Image -->
       <div class="col-md-6 text-center mt-4 mt-md-0">
-        <img src="{{ asset('images/tampil.png') }}" alt="Laundry Berkah" class="hero-image" loading="lazy">
+        <i class="fas fa-tshirt fa-7x text-primary"></i> <!-- Ikon baju -->
       </div>
     </div>
   </div>

@@ -299,14 +299,14 @@ return [
 
     'menu' => [
 
-        // Menu Utama
+        // Menu untuk ADMIN
         [
             'text' => 'Dashboard',
             'url'  => 'admin/dashboard',
             'icon' => 'fas fa-fw fa-home',
+            'can'  => 'admin', // menggunakan policy atau manual nanti
         ],
 
-        // Dropdown Data Master
         [
             'text'    => 'Data Master',
             'icon'    => 'fas fa-database',
@@ -322,9 +322,9 @@ return [
                     'icon' => 'fas fa-users',
                 ],
             ],
+            'can' => 'admin',
         ],
 
-        // Dropdown Transaksi
         [
             'text'    => 'Transaksi',
             'icon'    => 'fas fa-exchange-alt',
@@ -342,7 +342,6 @@ return [
             ],
         ],
 
-        // Dropdown Laporan
         [
             'text'    => 'Laporan',
             'icon'    => 'fas fa-file-alt',
@@ -353,15 +352,34 @@ return [
                     'icon' => 'fas fa-file-invoice',
                 ],
             ],
+            'can' => 'admin',
         ],
 
+        // Menu Transaksi (Dapat diakses oleh USER & ADMIN)
+        [
+            'text'    => 'Dashboard',
+            'url'     => '/user/dashboard',
+            'icon'    => 'fas fa-fw fa-home',
+            'can'     => 'user',
+        ],
+        [
+            'text'    => 'Transaksi',
+            'icon'    => 'fas fa-exchange-alt',
+            'submenu' => [
+                [
+                    'text' => 'Booking',
+                    'url'  => '/user/booking',
+                    'icon' => 'fas fa-calendar-check',
+                ],
 
-
-
-        // Sidebar items:
-
-
-
+                [
+                    'text' => 'Pembayaran',
+                    'url'  => '/user/payments',
+                    'icon' => 'fas fa-money-bill',
+                ],
+            ],
+            'can'     => 'user',
+        ],
 
     ],
 

@@ -9,7 +9,9 @@
     use App\Http\Controllers\ReportController;
     use App\Http\Controllers\TrackingController;
     use App\Http\Controllers\PaymentController;
-    use App\Http\Controllers\user\PaymentUserController as UserPaymentController;
+    use App\Http\Controllers\user\UserDashboardController;
+    use App\Http\Controllers\user\UserBookingController;
+    use App\Http\Controllers\user\UserPaymentController;
 
     // Halaman awal bisa diarahkan ke login
     // Route::get('/', function () {
@@ -43,8 +45,18 @@
         Route::get('/laporan/cetak', [ReportController::class, 'exportPdf'])->name('report.export');
     });
 
-    // User routes
+
     Route::middleware(['auth'])->group(function () {
+        Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
+        Route::get('/user/booking', [UserBookingController::class, 'index'])->name('user.bookings.index');
+        Route::get('/user/booking/create', [UserBookingController::class, 'create'])->name('user.bookings.create');
+        Route::post('/user/booking/store', [UserBookingController::class, 'store'])->name('user.bookings.store');
+        Route::get('/user/booking/{id}/edit', [UserBookingController::class, 'edit'])->name('user.bookings.edit');
+        Route::put('/user/booking/{id}', [UserBookingController::class, 'update'])->name('user.bookings.update');
+        Route::delete('/user/booking/{id}', [UserBookingController::class, 'destroy'])->name('user.bookings.destroy');
+
+        Route::get('/user/payments', [UserPaymentController::class, 'index'])->name('user.payments.index');
+        Route::get('/user/payments/create', [UserPaymentController::class, 'create'])->name('user.payments.create');
         Route::get('/upload-bukti/{booking}', [UserPaymentController::class, 'create'])->name('user.payments.upload');
         Route::post('/upload-bukti', [UserPaymentController::class, 'store'])->name('user.payments.store');
     });

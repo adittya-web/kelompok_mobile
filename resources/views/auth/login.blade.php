@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
     <style>
         body {
-            background: linear-gradient(to right, #a8e063, #56ab2f);
+            background: linear-gradient(to right, #2a9df4, #2a9df4);
             height: 100vh;
             display: flex;
             align-items: center;
@@ -24,6 +31,10 @@
 
         .card-header {
             border-radius: 15px 15px 0 0;
+        }
+
+        .bg-dark-navy {
+            background-color: #03254c;
         }
 
         .form-control {
@@ -43,12 +54,12 @@
         .btn-primary {
             border-radius: 8px;
             font-weight: 600;
-            background-color: #56ab2f;
+            background-color: #03254c;
             border: none;
         }
 
         .btn-primary:hover {
-            background-color: #4b942e;
+            background-color: #021b34;
         }
 
         .input-group-text {
@@ -61,8 +72,8 @@
         <div class="row justify-content-center">
             <div class="col-md-5 col-lg-4">
                 <div class="card login-card">
-                    <div class="card-header bg-success text-white text-center py-4">
-                        <img src="images/spals.png" class="logo" alt="Logo">
+                    <div class="card-header bg-dark-navy text-white text-center py-4">
+                        <i class="fas fa-right-to-bracket fa-2x mb-2"></i> <!-- Ikon login -->
                         <h4 class="mb-0">Login</h4>
                     </div>
                     <div class="card-body p-4">
@@ -72,15 +83,15 @@
                             </div>
                         @endif
                     
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul class="mb-0">
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <form method="POST" action="{{ route('login.authenticate') }}">
                             @csrf
@@ -90,7 +101,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-person"></i></span>
                                     <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" 
-                                        value="{{ old('name') }}" placeholder="Enter your name" required autofocus>
+                                           value="{{ old('name') }}" placeholder="Enter your name" required autofocus>
                                     @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -102,7 +113,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
                                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" 
-                                        placeholder="Enter your password" required>
+                                           placeholder="Enter your password" required>
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -118,8 +129,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap Icon CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </body>
 </html>

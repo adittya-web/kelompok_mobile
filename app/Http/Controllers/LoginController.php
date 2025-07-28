@@ -27,24 +27,25 @@ class LoginController extends Controller
 
         $user = \App\Models\User::where('name', $credentials['name'])->first();
 
+        // Cek user dan password
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
             return back()->withErrors(['name' => 'Nama pengguna atau kata sandi salah.']);
         }
 
-        // ❗ Tambahan: tolak login untuk user role selain admin
-        if ($user->role === 'user') {
-            return back()->with('error', 'Anda tidak memiliki akses login.');
-        }
-
-        // Hanya admin yang bisa login
-        if ($user->role !== 'admin') {
-            return back()->with('error', 'Akses ditolak! Hanya admin yang diperbolehkan login.');
-        }
-
+        // Login user
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('dashboard');
+        // Arahkan berdasarkan role
+        if ($user->role === 'admin') {
+            return redirect()->route('dashboard');
+        } elseif ($user->role === 'user') {
+            return redirect()->route('user.dashboard');
+        }
+
+        // Jika role tidak dikenali
+        Auth::logout();
+        return back()->with('error', 'Akses ditolak! Role tidak dikenali.');
     }
 
 
