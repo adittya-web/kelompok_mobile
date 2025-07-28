@@ -1,116 +1,108 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laundry Admin | Selamat Datang</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(to right, #e6f0ff, #d4f5e6);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Laundry Berkah</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px 60px;
-            background-color: transparent;
-        }
+  <!-- Favicon -->
+  <link rel="icon" href="{{ asset('images/icon.png') }}" type="image/png">
 
-        nav .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #3366cc;
-        }
-
-        nav .menu a {
-            margin: 0 15px;
-            color: #666;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .main-section {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 50px 60px;
-            flex-wrap: wrap;
-        }
-
-        .main-text {
-            max-width: 500px;
-        }
-
-        .main-text h1 {
-            font-size: 52px;
-            font-weight: 700;
-            color: #1a1a1a;
-        }
-
-        .main-text p {
-            margin: 20px 0;
-            color: #555;
-            font-size: 18px;
-        }
-
-        .main-text a.btn {
-            padding: 12px 28px;
-            background-color: #3366cc;
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .main-image img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        @media (max-width: 768px) {
-            .main-section {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            nav {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .main-text h1 {
-                font-size: 36px;
-            }
-        }
-    </style>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+    }
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .navbar-brand span {
+      color: #2a9df4;
+    }
+    .hero-section {
+      background: linear-gradient(to right, #2a9df4, #2a9df4);
+      color: white;
+      padding: 80px 0;
+    }
+    .hero-text h1 {
+      font-size: 48px;
+      font-weight: 800;
+    }
+    .hero-text p {
+      font-size: 18px;
+      margin-top: 15px;
+    }
+    .btn-rounded {
+      border-radius: 50px;
+      padding: 10px 25px;
+      font-weight: 600;
+    }
+    .btn-outline-white {
+      border: 2px solid #fff;
+      color: #fff;
+      background: transparent;
+    }
+    .btn-outline-white:hover {
+      background-color: #fff;
+      color: #2a9df4;
+    }
+    .hero-image {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    footer {
+      background: #fff;
+      border-top: 1px solid #eee;
+    }
+    @media (max-width: 768px) {
+      .hero-text h1 {
+        font-size: 36px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">Laundry</div>
-        <div class="menu">
-            <a href="#">Sign In</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <a href="#">FAQ</a>
-        </div>
-    </nav>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg px-4 py-3 container-fluid">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Laundry<span>Berkah</span></a>
+    <div class="ms-auto">
+      <a href="{{ route('login') }}" class="btn btn-outline-success">Login</a>
+    </div>
+  </div>
+</nav>
 
-    <section class="main-section">
-        <div class="main-text">
-            <h1>Laundry</h1>
-            <p>Solusi terbaik untuk kebutuhan cucian Anda. Layanan laundry cepat, bersih, dan terpercaya dengan harga terjangkau.</p>
-
-            <a href="{{ route('login') }}" class="btn">Login</a>
+<!-- Hero Section -->
+<div class="container-fluid hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Left Text -->
+      <div class="col-md-6 hero-text text-center text-md-start">
+        <h1>Pakaian Bersih, Hidup Lebih Cerah</h1>
+        <p>Nikmati layanan laundry cepat, bersih, dan wangi. Kami siap menjemput dan mengantar pakaian Anda!</p>
+        <div class="mt-4">
+          <a href="{{ route('login') }}" class="btn btn-light btn-rounded me-3">🧺 Login untuk Booking</a>
         </div>
-        <div class="main-image">
-            <img src="{{ asset('/screens.png') }}" alt="Laundry Illustration">
-        </div>
-    </section>
+      </div>
+      <!-- Right Image -->
+      <div class="col-md-6 text-center mt-4 mt-md-0">
+        <i class="fas fa-tshirt fa-7x text-primary"></i> <!-- Ikon baju -->
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Footer -->
+<footer class="text-center text-muted py-4">
+  <small>&copy; {{ date('Y') }} Laundry Berkah. All rights reserved.</small>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

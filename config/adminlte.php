@@ -63,11 +63,11 @@ return [
     |
     */
 
-'logo' => '<b>Laundry</b>Berkah',
-'logo_img' => 'images/Laundry-Logo.jpg', // tambahkan baris ini
-'logo_img_class' => 'brand-image img-circle elevation-3',
-'logo_img_xl' => null,
-'logo_img_alt' => 'Laundry Logo',
+    'logo' => '<b>Laundry</b>Berkah',
+    'logo_img' => 'images/Laundry-Logo.jpg', // tambahkan baris ini
+    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo_img_xl' => null,
+    'logo_img_alt' => 'Laundry Logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -82,16 +82,16 @@ return [
     |
     */
 
-'auth_logo' => [
-    'enabled' => true,
-    'img' => [
-        'path' => 'images/Laundry-Logo.jpg',
-        'alt' => 'Laundry Logo',
-        'class' => '',
-        'width' => 80,
-        'height' => 80,
+    'auth_logo' => [
+        'enabled' => true,
+        'img' => [
+            'path' => 'images/Laundry-Logo.jpg',
+            'alt' => 'Laundry Logo',
+            'class' => '',
+            'width' => 80,
+            'height' => 80,
+        ],
     ],
-],
 
     /*
     |--------------------------------------------------------------------------
@@ -189,15 +189,15 @@ return [
     |
     */
 
-    'classes_body' => '',
-    'classes_brand' => '',
+    'classes_body' => 'dark-mode',
+    'classes_brand' => 'bg-dark',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
-    'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-white navbar-light',
+    'classes_sidebar_nav' => 'nav-legacy',
+    'classes_topnav' => 'navbar-dark navbar-gray-dark',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -298,48 +298,89 @@ return [
     */
 
     'menu' => [
-        
+
+        // Menu untuk ADMIN
         [
             'text' => 'Dashboard',
             'url'  => 'admin/dashboard',
-            'icon' => 'fas fa-tachometer-alt',
-            
+            'icon' => 'fas fa-fw fa-home',
+            'can'  => 'admin', // menggunakan policy atau manual nanti
         ],
-        [
-            'text' => 'Booking',
-            'url'  => '/bookings',
-            'icon' => 'fas fa-calendar-check',
-            
-        ],
-        [
-            'text' => 'Pembayaran',
-            'url'  => '/payments',
-            'icon' => 'fas fa-money-bill',
-            
-        ],
-        [
-            'text' => 'Layanan',
-            'url'  => '/services',
-            'icon' => 'fas fa-concierge-bell',
-            
-        ],
-        [
-            'text' => 'Users',
-            'url'  => '/users',
-            'icon' => 'fas fa-users',
-            
-        ],
-        [
-            'text' => 'Laporan',
-            'url'  => '/laporan',
-            'icon' => 'fas fa-file-alt',
-            
-        ],
-        // Sidebar items:
 
+        [
+            'text'    => 'Data Master',
+            'icon'    => 'fas fa-database',
+            'submenu' => [
+                [
+                    'text' => 'Layanan',
+                    'url'  => '/services',
+                    'icon' => 'fas fa-concierge-bell',
+                ],
+                [
+                    'text' => 'Users',
+                    'url'  => '/users',
+                    'icon' => 'fas fa-users',
+                ],
+            ],
+            'can' => 'admin',
+        ],
 
-        
-        
+        [
+            'text'    => 'Transaksi',
+            'icon'    => 'fas fa-exchange-alt',
+            'submenu' => [
+                [
+                    'text' => 'Booking',
+                    'url'  => '/bookings',
+                    'icon' => 'fas fa-calendar-check',
+                ],
+                [
+                    'text' => 'Pembayaran',
+                    'url'  => '/payments',
+                    'icon' => 'fas fa-money-bill',
+                ],
+            ],
+        ],
+
+        [
+            'text'    => 'Laporan',
+            'icon'    => 'fas fa-file-alt',
+            'submenu' => [
+                [
+                    'text' => 'Laporan Transaksi',
+                    'url'  => '/laporan',
+                    'icon' => 'fas fa-file-invoice',
+                ],
+            ],
+            'can' => 'admin',
+        ],
+
+        // Menu Transaksi (Dapat diakses oleh USER & ADMIN)
+        [
+            'text'    => 'Dashboard',
+            'url'     => '/user/dashboard',
+            'icon'    => 'fas fa-fw fa-home',
+            'can'     => 'user',
+        ],
+        [
+            'text'    => 'Transaksi',
+            'icon'    => 'fas fa-exchange-alt',
+            'submenu' => [
+                [
+                    'text' => 'Booking',
+                    'url'  => '/user/booking',
+                    'icon' => 'fas fa-calendar-check',
+                ],
+
+                [
+                    'text' => 'Pembayaran',
+                    'url'  => '/user/payments',
+                    'icon' => 'fas fa-money-bill',
+                ],
+            ],
+            'can'     => 'user',
+        ],
+
     ],
 
     /*

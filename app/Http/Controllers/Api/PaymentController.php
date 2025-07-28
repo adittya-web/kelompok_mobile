@@ -7,10 +7,12 @@ use App\Models\Booking;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
 {
+    /**
+     * Simpan pembayaran baru.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -20,6 +22,7 @@ class PaymentController extends Controller
         ]);
 
         $path = null;
+
         if ($request->hasFile('proof_image')) {
             $path = $request->file('proof_image')->store('payments', 'public');
         }
@@ -28,52 +31,49 @@ class PaymentController extends Controller
             'booking_id' => $request->booking_id,
             'payment_method' => $request->payment_method,
             'payment_status' => 'pending',
-            'proof_image_url' => $path ? asset('storage/' . $path) : null,
-
+            'proof_image' => $path, // hanya simpan relative path (tanpa asset())
         ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Pembayaran berhasil dikirim',
-            'data' => $payment,
+            'data' => [
+                'id' => $payment->id,
+                'booking_id' => $payment->booking_id,
+                'payment_method' => $payment->payment_method,
+                'payment_status' => $payment->payment_status,
+                'proof_image_url' => $payment->proof_image ? asset('storage/' . $payment->proof_image) : null,
+            ]
         ]);
     }
 
-
+    /**
+     * Tampilkan semua pembayaran milik user yang login.
+     */
     public function index(Request $request)
     {
-        $payments = Payment::with('booking.service')
+        $payments = Payment::with(['booking.service'])
             ->whereHas('booking', function ($query) use ($request) {
                 $query->where('user_id', $request->user()->id);
             })
             ->latest()
             ->get();
 
-        $data = $payments->map(function ($payment) {
-            return [
-                'id' => $payment->id,
-                'booking_id' => $payment->booking_id,
-                'payment_method' => $payment->payment_method,
-                'payment_status' => $payment->payment_status,
-                'paid_at' => $payment->paid_at,
-
-
-                'proof_image_url' => $payment->proof_image
-                    ? asset('storage/payment/' . $payment->proof_image)
-                    : null,
-            ];
-        });
-
         return response()->json([
             'success' => true,
-            'data' => $payments // kirim langsung objek payment lengkap
+            'data' => $payments,
         ]);
     }
 
+    /**
+     * Konfirmasi pembayaran oleh admin (ubah status jadi "lunas").
+     */
     public function confirm($id)
     {
         $payment = Payment::findOrFail($id);
-        $payment->payment_status = 'lunas'; // ✅ HARUS INI, bukan $payment->status
+
+        $payment->payment_status = 'lunas';
+        $payment->paid_at = now();
         $payment->save();
 
         $booking = $payment->booking;
@@ -82,7 +82,14 @@ class PaymentController extends Controller
 
         return response()->json([
             'message' => 'Pembayaran dikonfirmasi',
-            'payment' => $payment,
+            'payment' => [
+                'id' => $payment->id,
+                'payment_status' => $payment->payment_status,
+                'paid_at' => $payment->paid_at,
+                'proof_image_url' => $payment->proof_image
+                    ? asset('storage/' . $payment->proof_image)
+                    : null,
+            ],
         ]);
     }
 }

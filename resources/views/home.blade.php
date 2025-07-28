@@ -1,75 +1,91 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laundry Berkah</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .hero {
-            padding: 100px 20px;
-            text-align: center;
-            background-color: #f0f8ff;
-        }
-        .feature {
-            text-align: center;
-            padding: 40px 20px;
-        }
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-            color: #007bff;
-        }
-        .navbar-brand span {
-            color: #007bff;
-        }
-        .navbar .nav-link {
-            margin-left: 10px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Laundry Berkah</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+    }
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .navbar-brand span {
+      color: #00b39f;
+    }
+    .hero-section {
+      background: linear-gradient(to right, #00b39f, #00e5b0);
+      color: white;
+      padding: 80px 0;
+    }
+    .hero-text h1 {
+      font-size: 48px;
+      font-weight: 800;
+    }
+    .hero-text p {
+      font-size: 18px;
+      margin-top: 15px;
+    }
+    .btn-rounded {
+      border-radius: 50px;
+      padding: 10px 25px;
+      font-weight: 600;
+    }
+    .btn-outline-white {
+      border: 2px solid #fff;
+      color: #fff;
+      background: transparent;
+    }
+    .btn-outline-white:hover {
+      background-color: #fff;
+      color: #00b39f;
+    }
+    .hero-image {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    @media (max-width: 768px) {
+      .hero-text h1 {
+        font-size: 36px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
-    <a class="navbar-brand fw-bold" href="#">Laundry<span>Berkah</span></a>
-    <div class="ms-auto">
-        <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Sign In</a>
-        <a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a>
-    </div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg px-4 py-3">
+  <a class="navbar-brand fw-bold" href="#">Laundry<span>Berkah</span></a>
+  <div class="ms-auto">
+    <a href="{{ route('login') }}" class="btn btn-outline-success">Login</a>
+  </div>
 </nav>
 
-<!-- HERO SECTION -->
-<div class="hero">
-    <h1 class="display-5 fw-bold">Selamat Datang di <span class="text-primary">Laundry Berkah</span></h1>
-    <p class="lead mt-3">Solusi mudah dan cepat untuk mencuci pakaian Anda. Kami siap menjemput dan mengantar kembali dengan bersih dan wangi!</p>
-</div>
-
-<!-- FITUR -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 feature">
-            <div class="feature-icon">👕</div>
-            <h5>Layanan Cepat</h5>
-            <p>Proses laundry dalam waktu singkat dengan hasil bersih maksimal.</p>
+<!-- Hero Section -->
+<div class="container-fluid hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Left Text -->
+      <div class="col-md-6 hero-text text-center text-md-start">
+        <h1>Pakaian Bersih, Hidup Lebih Cerah</h1>
+        <p>Nikmati layanan laundry cepat, bersih, dan wangi. Kami siap menjemput dan mengantar pakaian Anda!</p>
+        <div class="mt-4">
+          <a href="{{ route('login') }}" class="btn btn-light btn-rounded me-3">🧺 Login untuk Booking</a>
+          <a href="#" class="btn btn-outline-white btn-rounded">Lihat Jadwal</a>
         </div>
-        <div class="col-md-4 feature">
-            <div class="feature-icon">🚚</div>
-            <h5>Jemput Antar</h5>
-            <p>Kami menjemput pakaian Anda dan mengantarkannya kembali.</p>
-        </div>
-        <div class="col-md-4 feature">
-            <div class="feature-icon">⭐</div>
-            <h5>Kualitas Terbaik</h5>
-            <p>Pakaian bersih, harum, dan disetrika rapi oleh tenaga profesional.</p>
-        </div>
+      </div>
+      <!-- Right Image -->
+      <div class="col-md-6 text-center mt-4 mt-md-0">
+        <img src="{{ asset('images/spals.png') }}" alt="Laundry Berkah" class="hero-image" loading="lazy">
+      </div>
     </div>
+  </div>
 </div>
-
-<!-- FOOTER -->
-<footer class="text-center mt-5 mb-4 text-muted">
-    &copy; {{ date('Y') }} Laundry Berkah
-</footer>
 
 </body>
 </html>

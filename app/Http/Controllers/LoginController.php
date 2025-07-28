@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -24,21 +25,30 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+        $user = \App\Models\User::where('name', $credentials['name'])->first();
 
-            $user = Auth::user();
-            if ($user->role === 'admin') {
-                return redirect()->route('dashboard');
-            } else {
-                return redirect()->route('dashboard');
-            }
+        // Cek user dan password
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+            return back()->withErrors(['name' => 'Nama pengguna atau kata sandi salah.']);
+
         }
 
-        return back()->withErrors([
-            'name' => 'The provided credentials do not match our records.',
-        ]);
+        // Login user
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        // Arahkan berdasarkan role
+        if ($user->role === 'admin') {
+            return redirect()->route('dashboard');
+        } elseif ($user->role === 'user') {
+            return redirect()->route('user.dashboard');
+        }
+
+        // Jika role tidak dikenali
+        Auth::logout();
+        return back()->with('error', 'Akses ditolak! Role tidak dikenali.');
     }
+
 
     public function logout(Request $request)
     {

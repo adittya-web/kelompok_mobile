@@ -1,13 +1,7 @@
-@extends('adminlte::page')
-
-@section('title', 'Booking')
-
-@section('content_header')
-    <h1>Booking Laundry</h1>
-@stop
+@extends('layouts.app')
 
 @section('content')
-<div class="card-body">
+<div class="container-fluid mt-4">
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -17,7 +11,7 @@
         </div>
     @endif
 
-    <div class="card">
+    <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
             <h4 class="mb-0"><i class="fas fa-calendar-check"></i> Data Booking</h4>
         </div>
@@ -86,7 +80,8 @@
         </div>
     </div>
 </div>
-@stop
+
+@endsection
 @section('css')
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 @stop
