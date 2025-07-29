@@ -82,7 +82,7 @@
     <div class="row align-items-center">
       <!-- Left Text -->
       <div class="col-md-6 hero-text text-center text-md-start">
-        <h1>Pakaian Bersih, Hidup Lebih Cerah</h1>
+        <h1>Pakaian iky, Hidup Lebih Cerah</h1>
         <p>Nikmati layanan laundry cepat, bersih, dan wangi. Kami siap menjemput dan mengantar pakaian Anda!</p>
         <div class="mt-4">
           <a href="{{ route('login') }}" class="btn btn-light btn-rounded me-3">🧺 Login untuk Booking</a>
