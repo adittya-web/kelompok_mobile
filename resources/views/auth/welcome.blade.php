@@ -103,7 +103,7 @@
     <section class="main-section">
         <div class="main-text">
             <h1>Laundry</h1>
-            <p>Solusi terbaik untuk kebutuhan cucian Anda. Layanan laundry cepat, bersih, dan terpercaya dengan harga terjangkau.</p>
+            <p>Solusi satu untuk kebutuhan cucian Anda. Layanan laundry cepat, bersih, dan terpercaya dengan harga terjangkau.</p>
 
             <a href="{{ route('login') }}" class="btn">Login</a>
         </div>

@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\OrderTrackingController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\GoogleAuthController;
+use App\Http\Controllers\Api\GoogleAuthController;  
 
 // === Auth Routes ===
 Route::post('/auth/firebase', [AuthController::class, 'firebaseLogin']);

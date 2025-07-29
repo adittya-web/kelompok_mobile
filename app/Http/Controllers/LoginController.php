@@ -10,7 +10,7 @@ class LoginController extends Controller
     public function welcome()
     {
         return view('auth.welcome');
-    }
+    }   
 
     public function index()
     {
@@ -31,7 +31,7 @@ class LoginController extends Controller
             if ($user->role === 'admin') {
                 return redirect()->route('dashboard');
             } else {
-                return redirect()->route('user.dashboard');
+                return redirect()->route('dashboard');
             }
         }
 

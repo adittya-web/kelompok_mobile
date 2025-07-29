@@ -25,7 +25,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Admin routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/booking', [DashboardController::class, 'booking'])->name('dashboard.booking');
 
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
     Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('bookings.show');
